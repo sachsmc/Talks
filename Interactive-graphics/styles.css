@@ -1,0 +1,13 @@
+div.titleslide {
+
+  background-color: slategrey;
+  color: white;
+  text-align: center;
+  font-size: 180%;
+
+}
+
+.titleslide h1 {
+  
+  padding-top: 10%!important;
+}

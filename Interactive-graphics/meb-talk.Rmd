@@ -3,7 +3,8 @@ title: "Interactive Graphics"
 author: "Michael Sachs"
 date: "8 March 2018"
 output: 
-    slidy_presentation
+    slidy_presentation:
+      css: styles.css
 ---
 
 ```{r setup, include=FALSE}
@@ -11,7 +12,6 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # What?
-
 
 
 ## Interactive graphics
@@ -89,6 +89,65 @@ p1 + geom_rocci() + style_roc()
 ```
 
 
+## Access to information
+
+Shiny app example
+
+
+# Why?
+
+## Reduced cognitive burden
+
+- A geometric element that represents a data point can be tracked visually through the transition
+- Pre-attentive processing of motion > scanning + matching of labels/colors
+
+$\rightarrow$ enhances viewer's understanding + insight
+
+
+# Where? 
+
+
+## Web browser
+
+- Cross platform and portable/easy to share
+- Lot's of existing infrastructure and tools
+
+
+## Servers and browsers
+
+A static web page
+
+![](web1.png)
+
+
+## Servers and browsers (2)
+
+A static web page
+
+![](web2.png)
+
+
+## Servers and browsers (3)
+
+A static web page
+
+![](web3.png)
+
+
+
+## Servers and browsers
+
+A dynamic web page
+
+![](web4.png)
+
+## SVG
+
+"Scalable Vector Graphics"
+
+
+
+
 # How?
 
 
@@ -99,6 +158,11 @@ mtcars %>% select(mpg, hp) %>% head(1) %>% ggplot(aes(mpg, hp)) + geom_point(siz
   scale_x_continuous("", labels = NULL) + scale_y_continuous("", labels = NULL) + theme_minimal()
 ```
 
+```
+<symbol id="gridSVG.pch19" viewBox="-5 -5 10 10" overflow="visible">
+          <circle cx="0" cy="0" r="3.75"/>
+</symbol>
+```
 
 ## Modify rendered elements
 
@@ -118,6 +182,13 @@ tnm$svg
 ```
 
 </div>
+
+```js
+d3.select("gridSVG.pch19")
+  .move(Math.random());
+```
+
+
 
 <script type="text/javascript">
 
