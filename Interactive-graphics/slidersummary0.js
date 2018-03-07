@@ -7,6 +7,11 @@ var xs = d3.scale.linear()
     .domain([0, 100])
     .range([0, width]);
 
+var brush = d3.svg.brush()
+    .x(xs)
+    .extent([0, 70])
+    .on("brush", brushed);
+
 var svgs = d3.select("#slider").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -41,7 +46,6 @@ svgs.append("g")
   .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
     .attr("class", "halo");
 
-
 svgs.append("svg:image").attr("transform", "translate(" + (width-50) + ", -50)")
    .attr('width', 50)
    .attr('height', 50)
@@ -52,6 +56,28 @@ svgs.append("svg:image").attr("transform", "translate(0, -50)")
    .attr('height', 50)
 	.attr("xlink:href","Rlogo.png");
 
+var slider = svgs.append("g")
+    .attr("class", "slider")
+    .call(brush);
+
+slider.selectAll(".extent,.resize")
+    .remove();
+
+slider.select(".background")
+    .attr("height", height);
+
+var handle = slider.append("circle")
+    .attr("class", "handle")
+    .attr("transform", "translate(0," + (height+20) + ")")
+    .attr("r", 9);
+
+slider
+    .call(brush.event)
+  .transition() // gratuitous intro!
+    .duration(750)
+    .call(brush.extent([70, 70]))
+    .call(brush.event);
+
 
 var Rrect = svgs.append("rect").attr("class", "rrect")
 	.attr("width", width/2)
@@ -60,28 +86,6 @@ var Rrect = svgs.append("rect").attr("class", "rrect")
 var Jsrect = svgs.append("rect").attr("class", "jsrect").attr("width", width/2)
 	.attr("transform", "translate(" + width/2 + ", 0)")
 		.attr("height", height).attr("fill", "#F0DB4F");
-
-
-var drag = d3.behavior.drag()
-    .origin(function(d) { return {x: d[0], y: d[1]}; })
-    .on("drag", dragged);
-    
-var handle = svgs.append("circle")
-    .attr("class", "handle")
-    .attr("cx", 0)
-    .attr("cy", 0)
-    .attr("transform", "translate(" + width / 2 + "," + (height - height / 2) + ")")
-    .attr("r", 9)
-    .call(drag);
-    
-    
-    
-function dragged(d) {
-  d[0] = d3.event.x;
-  console.log(d);
-  d3.select(this).attr("transform", "translate(" + d + ")");
-}
-
 
 function brushed() {
   
