@@ -12,6 +12,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+
 # What are they?
 
 ```{r init, include = FALSE}
@@ -38,17 +39,17 @@ library(gginteractive)
 [gapminder](http://www.gapminder.org/tools/#_state_time_delay:100;;&chart-type=bubbles)
 
 
-## Static approach
-
-```{r g1}
-ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
-   geom_point()  + scale_x_log10() + facet_wrap(~ year)
-```
 
 
-## Explore data
 
-![tour](mttour.gif)
+# Why use them?
+
+## Compared to static figures/tables
+
+- Increase density of information
+- Enhance dimensionality of a figure
+- Facilitate access to information
+
 
 ## Illustrate concepts
 
@@ -88,6 +89,36 @@ gganimate(p, file = "C:/Users/micsac/test.gif", interval = .2)
 ![loess](loess.gif)
 
 
+## Reduced cognitive burden
+
+- A geometric element that represents a data point can be tracked visually through a transition
+- Pre-attentive processing of motion > scanning + matching of labels/colors
+
+$\rightarrow$ enhances viewer's understanding + insight
+
+## Static gapminder is hard to absorb
+
+```{r g1}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+   geom_point()  + scale_x_log10() + facet_wrap(~ year)
+```
+
+
+
+## Information density/access
+
+- Answer many questions at once
+- Empower users to find information
+- Not being reactive to "what if?s"
+- Reduce burden on statisitician
+
+
+## Explore data
+
+![tour](mttour.gif)
+
+
+
 ## Enhance standard graphs
 
 ```{r rocex, include = FALSE}
@@ -120,30 +151,6 @@ p1 + geom_rocci() + style_roc()
 ```
 
 
-
-# Why use them?
-
-## Compared to static figures/tables
-
-- Increase density of information
-- Enhance dimensionality of a figure
-- Facilitate access to information
-
-
-## Reduced cognitive burden
-
-- A geometric element that represents a data point can be tracked visually through a transition
-- Pre-attentive processing of motion > scanning + matching of labels/colors
-
-$\rightarrow$ enhances viewer's understanding + insight
-
-
-## Information density/access
-
-- Answer many questions at once
-- Empower users to find information
-- Not being reactive to "what if?s"
-- Reduce burden on statisitician
 
 # Where do we view them? 
 
@@ -362,7 +369,7 @@ p4 %>% mesh_geom("smooth", attr = "opacity",
 
 ## Examples (3) 
 
-```{r gap1, echo = TRUE, results = "asis", fig.width = 2.5, fig.height = 1.5, omit.js = TRUE}
+```{r gap1, echo = TRUE, results = "asis", fig.width = 3.25, fig.height = 1.5, omit.js = TRUE}
 p2 <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
          geom_point()  + scale_x_log10() 
 
