@@ -12,15 +12,13 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# What?
 
-
-## Interactive graphics
+# What are they?
 
 ```{r init, include = FALSE}
 library(lattice)
 library(ggplot2)
-library(gganimate)
+#library(gganimate)
 library(broom)
 library(gridSVG)
 library(grid)
@@ -32,36 +30,28 @@ library(gginteractive)
 ```
 
 
-Compared to static figures/tables:
+## Interactive graphics
 
-- Increase density of information
-- Enhance dimensionality of a figure
-- Ease of access to information
-
-
-
-# Examples
-
-
-## Density of information
+- Allow user to interact with graphical elements
+- Clicks, drags, controls, etc.
+- Animation
 
 [gapminder](http://www.gapminder.org/tools/#_state_time_delay:100;;&chart-type=bubbles)
 
 
-## Static approach
-
-```{r g1}
-ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
-   geom_point()  + scale_x_log10() + facet_wrap(~ year)
-```
 
 
-## Enhance dimensionality
 
-![tour](mttour.gif)
+# Why use them?
 
-## Enhance dimensionality (2)
+## Compared to static figures/tables
 
+- Increase density of information
+- Enhance dimensionality of a figure
+- Facilitate access to information
+
+
+## Illustrate concepts
 
 ```{r, eval = FALSE}
 spans <- c(.25, .5, .75, 1)
@@ -99,7 +89,37 @@ gganimate(p, file = "C:/Users/micsac/test.gif", interval = .2)
 ![loess](loess.gif)
 
 
-## Access to information
+## Reduced cognitive burden
+
+- A geometric element that represents a data point can be tracked visually through a transition
+- Pre-attentive processing of motion > scanning + matching of labels/colors
+
+$\rightarrow$ enhances viewer's understanding + insight
+
+## Static gapminder is hard to absorb
+
+```{r g1}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+   geom_point()  + scale_x_log10() + facet_wrap(~ year)
+```
+
+
+
+## Information density/access
+
+- Answer many questions at once
+- Empower users to find information
+- Not being reactive to "what if?s"
+- Reduce burden on statisitician
+
+
+## Explore data
+
+![tour](mttour.gif)
+
+
+
+## Enhance standard graphs
 
 ```{r rocex, include = FALSE}
 set.seed(2529)
@@ -132,17 +152,7 @@ p1 + geom_rocci() + style_roc()
 
 
 
-# Why?
-
-## Reduced cognitive burden
-
-- A geometric element that represents a data element can be tracked visually through the transition
-- Pre-attentive processing of motion > scanning + matching of labels/colors
-
-$\rightarrow$ enhances viewer's understanding + insight
-
-
-# Where? 
+# Where do we view them? 
 
 
 ## Web browser
@@ -189,7 +199,7 @@ A standardized markup format for describing shapes:
 
 
 
-# How?
+# How do we make them?
 
 
 ## Rendering
@@ -294,8 +304,8 @@ A number of toolkits have spun off based on d3.js
 - ... a more general framework, e.g., extend the grammar to interactivity
 
 
-```{r test-a, echo = FALSE, fig.keep='none', results = 'asis', fig.width=5, fig.height=4}
-p <- ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point(size = 5) + 
+```{r test-a, echo = FALSE, fig.keep='none', results = 'asis', fig.width=3.25, fig.height=2}
+p <- ggplot(mtcars, aes(x = mpg, y = hp)) + geom_point(size = 2) + 
   scale_y_continuous(limits = c(-50, 500)) + scale_x_continuous(limits = c(0, 50))
 p
 
@@ -343,12 +353,12 @@ cat(export_interactive_roc(p1,
 ## Examples (2) 
 
 
-```{r ggint, echo = TRUE, results = "asis", fig.width = 4, fig.height = 3, omit.js = TRUE}
+```{r ggint, echo = TRUE, results = "asis", fig.width = 3, fig.height = 1.5, omit.js = TRUE}
 library(gginteractive)
 
 spans <- seq(.3, 1.5, by = .1)
 p4 <- ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point() +
+  geom_point(size = 2) +
   lapply(spans, function(x) geom_smooth(method = "loess", span = x, se = FALSE))
 
 controls <- 0:length(spans)
@@ -359,7 +369,7 @@ p4 %>% mesh_geom("smooth", attr = "opacity",
 
 ## Examples (3) 
 
-```{r gap1, echo = TRUE, results = "asis", fig.width = 4, fig.height = 3, omit.js = TRUE}
+```{r gap1, echo = TRUE, results = "asis", fig.width = 3.25, fig.height = 1.5, omit.js = TRUE}
 p2 <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
          geom_point()  + scale_x_log10() 
 
@@ -371,7 +381,7 @@ p2
 ## Examples (4)
 
 
-```{r test-km, fig.keep='none', results = 'asis', warning = FALSE, message = FALSE, echo = FALSE, fig.width=6, fig.height=4}
+```{r test-km, fig.keep='none', results = 'asis', warning = FALSE, message = FALSE, echo = FALSE, fig.width=4, fig.height=2}
 library(ggkm)
 gdat <- survival::lung
 fit <- survfit(Surv(time, status) ~ factor(sex), data = gdat)
@@ -489,22 +499,49 @@ dotEnter.append("g")
 
 # Conclusion
 
-## For your consideration
+## Summary
 
-- Animation/interactivity should only be used when it enhances understanding
+### What
+
+- Interactive statistical graphics
+
+### Where 
+
 - Use is widespread in blogs/webpages, but only emerging in scientific publishing (e.g., Elsevier)
 
-R users have a wealth of resources to create interactive graphics:
+### Why
 
-- Link to JavaScript libraries
-- Rendering in R, get interactivity for free
-- Shiny server 
+- Animation/interactivity should only be used when it enhances understanding
 
 Interesting applications:
 
 - Summarizing complex data analysis
 - Illustrating statistical concepts
+- Let collaborators play the what-if? game
+
+### How
+
+- Link to JavaScript libraries
+- Rendering in R, get interactivity for free
+- Shiny server 
 
 
+
+## Advice
+
+For making your own interactive figures:
+
+### How do you plan to share?
+
+- Making and sharing static web sites is easy
+- Running code on a server requires a lot more IT tasks
+
+### What is the end product? 
+
+- Print article? Spend lots of time getting the static figure right -> enhance with some interactivity
+- Fancy report for collaborator
+- Public-facing website
+
+### There are many tools out there, find the right one that fits your needs
 
 

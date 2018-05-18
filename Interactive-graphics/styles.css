@@ -1,4 +1,4 @@
-div.titleslide {
+div.title-slide {
 
   background-color: slategrey;
   color: white;
@@ -7,7 +7,7 @@ div.titleslide {
 
 }
 
-.titleslide h1 {
+.title-slide h1 {
   
   padding-top: 10%!important;
 }
